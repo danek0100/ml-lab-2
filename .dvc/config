@@ -1,0 +1,5 @@
+[core]
+    autostage = true
+    remote = ml_remote
+['remote "ml_remote"']
+    url = gdrive://1VH7MS7sFDgY69r4AADqP2EyZL2hPIR-P/lab-2

@@ -1,0 +1,87 @@
+stages:
+  data_processing:
+    cmd: python -m src.data.make_dataset OUTPUT_TARGET_FILEPATH=.
+    deps:
+      - data/raw/test.csv
+      - data/raw/train.csv
+      - src/data/make_dataset.py
+      - src/data/preprocess.py
+      - src/config.py
+      - src/utils.py
+    params:
+      - data_load
+      - preprocess_category
+      - interim_paths
+      - processed_paths
+    outs:
+      - data/processed/target_for_data_for_train.pkl
+      - data/interim/data_for_train.pkl
+      - data/interim/val.pkl
+
+  feature_generation:
+    cmd: python -m src.features.build_features
+    deps:
+      - src/config.py
+      - src/utils.py
+      - src/features/functions.py
+      - src/features/build_features.py
+      - data/interim/data_for_train.pkl
+      - data/interim/val.pkl
+    params:
+      - preprocess_category
+      - interim_paths
+      - processed_paths
+    outs:
+      - data/processed/test.pkl
+      - data/processed/data_for_train.pkl
+
+  train:
+    cmd: python -m src.models.train_model
+    deps:
+      - src/config.py
+      - src/models/functions.py
+      - src/models/train_model.py
+      - data/processed/test.pkl
+      - data/processed/data_for_train.pkl
+    outs:
+      - models/model_catboost.joblib
+      - models/model_lgbm.joblib
+      - data/processed/X_test_data.pkl
+      - data/processed/Y_test_data.pkl
+    params:
+      - processed_paths
+      - train
+    plots:
+      - catboost_info/learn_error.tsv
+
+  evaluate:
+    cmd: python -m src.models.predict_model
+    deps:
+      - src/config.py
+      - src/models/predict_model.py
+      - src/models/train_model.py
+      - src/models/functions.py
+      - models/model_catboost.joblib
+      - models/model_lgbm.joblib
+      - data/processed/X_test_data.pkl
+      - data/processed/Y_test_data.pkl
+    params:
+      - evaluate
+      - train
+    metrics:
+      - reports/metrics_catboost.json
+      - reports/metrics_lightgbm.json
+    plots:
+      - reports/metrics_rocauc_catboost.csv
+      - reports/metrics_rocauc_lgbm.csv
+
+  inference:
+    cmd: python -m src.inference.inference DATA_FILEPATH=data/raw/test.csv
+    deps:
+      - data/raw/test.csv
+      - src/config.py
+      - src/inference/inference.py
+      - models/model_catboost.joblib
+      - models/model_lgbm.joblib
+    params:
+      - train

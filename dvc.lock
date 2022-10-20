@@ -1,0 +1,583 @@
+schema: '2.0'
+stages:
+  data_processing:
+    cmd: python -m src.data.make_dataset OUTPUT_TARGET_FILEPATH=.
+    deps:
+    - path: data/raw/test.csv
+      md5: df398776b248dc067500bd4ee8fd432f
+      size: 452863
+    - path: data/raw/train.csv
+      md5: 6d98f248d32b04638250825193b64c81
+      size: 462135
+    - path: src/config.py
+      md5: 33be8d87df0797a1c2dd02a462993507
+      size: 2638
+    - path: src/data/make_dataset.py
+      md5: db004b4f362f010086628f70a4bcbbc1
+      size: 2416
+    - path: src/data/preprocess.py
+      md5: 0426c113f2c47e63ff5bf53c20c67eb2
+      size: 3585
+    - path: src/utils.py
+      md5: a63e9fc88f67423ded9b88dcd49a34f6
+      size: 387
+    params:
+      params.yaml:
+        data_load:
+          train_csv: data/raw/train.csv
+          test_csv: data/raw/test.csv
+        interim_paths:
+          data_for_train_pkl: data/interim/data_for_train.pkl
+          val_pkl: data/interim/val.pkl
+        preprocess_category:
+          TARGET_COL:
+          - SalePrice
+          ID_COL: Id
+          CAT_COLS:
+          - MSZoning
+          - Street
+          - Alley
+          - LotShape
+          - LandContour
+          - Utilities
+          - LotConfig
+          - LandSlope
+          - Neighborhood
+          - Condition1
+          - Condition2
+          - BldgType
+          - HouseStyle
+          - RoofStyle
+          - RoofMatl
+          - Exterior1st
+          - Exterior2nd
+          - MasVnrType
+          - ExterQual
+          - ExterCond
+          - Foundation
+          - BsmtQual
+          - BsmtCond
+          - BsmtExposure
+          - BsmtFinType1
+          - BsmtFinType2
+          - Heating
+          - HeatingQC
+          - CentralAir
+          - Electrical
+          - KitchenQual
+          - Functional
+          - FireplaceQu
+          - GarageType
+          - GarageFinish
+          - GarageQual
+          - GarageCond
+          - PavedDrive
+          - PoolQC
+          - Fence
+          - MiscFeature
+          - SaleType
+          - SaleCondition
+          REAL_COLS:
+          - MSSubClass
+          - OverallQual
+          - OverallCond
+          - LotFrontage
+          - LotArea
+          - MasVnrArea
+          - BsmtFinSF1
+          - BsmtFinSF2
+          - BsmtUnfSF
+          - TotalBsmtSF
+          - 1stFlrSF
+          - 2ndFlrSF
+          - LowQualFinSF
+          - GrLivArea
+          - BsmtFullBath
+          - BsmtHalfBath
+          - FullBath
+          - HalfBath
+          - BedroomAbvGr
+          - KitchenAbvGr
+          - TotRmsAbvGrd
+          - Fireplaces
+          - GarageCars
+          - GarageArea
+          - WoodDeckSF
+          - OpenPorchSF
+          - EnclosedPorch
+          - 3SsnPorch
+          - ScreenPorch
+          - PoolArea
+          - MiscVal
+          DATA_COLS:
+          - YearBuilt
+          - YearRemodAdd
+          - GarageYrBlt
+          - MoSold
+          - YrSold
+          BASEMENT_COLS:
+          - BsmtCond
+          - BsmtExposure
+          - BsmtFinType1
+          - BsmtFinType2
+          MASONRY_COLS:
+          - MasVnrArea
+          GARAGE_COLS:
+          - GarageFinish
+          - GarageQual
+          - GarageCond
+          GARAGE_COL:
+          - GarageYrBlt
+          MAX_NUMBER_NAN_VALUE_COLS:
+          - PoolQC
+          - Fence
+          - MiscFeature
+          - Alley
+          - BsmtQual
+          - GarageType
+          - FireplaceQu
+          NUMBER_OF_TEST: 15
+        processed_paths:
+          target_data_train_pkl: data/processed/target_for_data_for_train.pkl
+          processed_test_pkl: data/processed/test.pkl
+          processed_data_for_train_pkl: data/processed/data_for_train.pkl
+    outs:
+    - path: data/interim/data_for_train.pkl
+      md5: d3fb841cdb1d0c85e89017758352d47e
+      size: 293968
+    - path: data/interim/val.pkl
+      md5: 9986f6c26c6b5a7a35a9b8bdcfa6b56b
+      size: 292875
+    - path: data/processed/target_for_data_for_train.pkl
+      md5: 0fc2ca267185b5a20128b4c6275ed98c
+      size: 18218
+  feature_generation:
+    cmd: python -m src.features.build_features
+    deps:
+    - path: data/interim/data_for_train.pkl
+      md5: d3fb841cdb1d0c85e89017758352d47e
+      size: 293968
+    - path: data/interim/val.pkl
+      md5: 9986f6c26c6b5a7a35a9b8bdcfa6b56b
+      size: 292875
+    - path: src/config.py
+      md5: 33be8d87df0797a1c2dd02a462993507
+      size: 2638
+    - path: src/features/build_features.py
+      md5: c6536bd9320feae4b84963055ba5de94
+      size: 1124
+    - path: src/features/functions.py
+      md5: 781cf53992fdd21995c0eb98d673f7a1
+      size: 6300
+    - path: src/utils.py
+      md5: a63e9fc88f67423ded9b88dcd49a34f6
+      size: 387
+    params:
+      params.yaml:
+        interim_paths:
+          data_for_train_pkl: data/interim/data_for_train.pkl
+          val_pkl: data/interim/val.pkl
+        preprocess_category:
+          TARGET_COL:
+          - SalePrice
+          ID_COL: Id
+          CAT_COLS:
+          - MSZoning
+          - Street
+          - Alley
+          - LotShape
+          - LandContour
+          - Utilities
+          - LotConfig
+          - LandSlope
+          - Neighborhood
+          - Condition1
+          - Condition2
+          - BldgType
+          - HouseStyle
+          - RoofStyle
+          - RoofMatl
+          - Exterior1st
+          - Exterior2nd
+          - MasVnrType
+          - ExterQual
+          - ExterCond
+          - Foundation
+          - BsmtQual
+          - BsmtCond
+          - BsmtExposure
+          - BsmtFinType1
+          - BsmtFinType2
+          - Heating
+          - HeatingQC
+          - CentralAir
+          - Electrical
+          - KitchenQual
+          - Functional
+          - FireplaceQu
+          - GarageType
+          - GarageFinish
+          - GarageQual
+          - GarageCond
+          - PavedDrive
+          - PoolQC
+          - Fence
+          - MiscFeature
+          - SaleType
+          - SaleCondition
+          REAL_COLS:
+          - MSSubClass
+          - OverallQual
+          - OverallCond
+          - LotFrontage
+          - LotArea
+          - MasVnrArea
+          - BsmtFinSF1
+          - BsmtFinSF2
+          - BsmtUnfSF
+          - TotalBsmtSF
+          - 1stFlrSF
+          - 2ndFlrSF
+          - LowQualFinSF
+          - GrLivArea
+          - BsmtFullBath
+          - BsmtHalfBath
+          - FullBath
+          - HalfBath
+          - BedroomAbvGr
+          - KitchenAbvGr
+          - TotRmsAbvGrd
+          - Fireplaces
+          - GarageCars
+          - GarageArea
+          - WoodDeckSF
+          - OpenPorchSF
+          - EnclosedPorch
+          - 3SsnPorch
+          - ScreenPorch
+          - PoolArea
+          - MiscVal
+          DATA_COLS:
+          - YearBuilt
+          - YearRemodAdd
+          - GarageYrBlt
+          - MoSold
+          - YrSold
+          BASEMENT_COLS:
+          - BsmtCond
+          - BsmtExposure
+          - BsmtFinType1
+          - BsmtFinType2
+          MASONRY_COLS:
+          - MasVnrArea
+          GARAGE_COLS:
+          - GarageFinish
+          - GarageQual
+          - GarageCond
+          GARAGE_COL:
+          - GarageYrBlt
+          MAX_NUMBER_NAN_VALUE_COLS:
+          - PoolQC
+          - Fence
+          - MiscFeature
+          - Alley
+          - BsmtQual
+          - GarageType
+          - FireplaceQu
+          NUMBER_OF_TEST: 15
+        processed_paths:
+          target_data_train_pkl: data/processed/target_for_data_for_train.pkl
+          processed_test_pkl: data/processed/test.pkl
+          processed_data_for_train_pkl: data/processed/data_for_train.pkl
+    outs:
+    - path: data/processed/data_for_train.pkl
+      md5: 9988ca3e09fd1449d88386e8082155d7
+      size: 305547
+    - path: data/processed/test.pkl
+      md5: 41da744e0d467a9f2c0401711ec8ffa1
+      size: 304393
+  train:
+    cmd: python -m src.models.train_model
+    deps:
+    - path: data/processed/data_for_train.pkl
+      md5: 93ca7bd4408b0218310485335e50cbae
+      size: 51584
+    - path: data/processed/test.pkl
+      md5: e5c0e58481efe3b0e4cfd9fa5934b074
+      size: 36306
+    - path: src/config.py
+      md5: 3e4a7be725268dffcddc10290c19e4b1
+      size: 2342
+    - path: src/models/functions.py
+      md5: 8a4b4f02f391ac7f3fbcee3d992cd5d3
+      size: 4778
+    - path: src/models/train_model.py
+      md5: 14cbed9bad7647f931b51c5554b01cd5
+      size: 2186
+    params:
+      params.yaml:
+        processed_paths:
+          target_data_train_pkl: data/processed/target_for_data_for_train.pkl
+          processed_test_pkl: data/processed/test.pkl
+          processed_data_for_train_pkl: data/processed/data_for_train.pkl
+        train:
+          COL:
+          - Пол
+          - Семья
+          - Этнос
+          - Национальность
+          - Религия
+          - Профессия
+          - Вы работаете?
+          - Выход на пенсию
+          - Прекращение работы по болезни
+          - Сахарный диабет
+          - Гепатит
+          - Онкология
+          - Хроническое заболевание легких
+          - Бронжиальная астма
+          - 'Туберкулез легких '
+          - ВИЧ/СПИД
+          - Регулярный прим лекарственных средств
+          - Травмы за год
+          - Переломы
+          - Статус Курения
+          - Пассивное курение
+          - Частота пасс кур
+          - Алкоголь
+          - Сова/Жаворонок/Голубь
+          - Часов сна
+          - Сон после обеда
+          - Спорт, клубы
+          - Религия, клубы
+          - Образование_ord
+          - Возраст курения
+          - Сигарет в день
+          - Возраст алког
+          CATEGORIES_COL_AFTER_PREP:
+          - Пол
+          - Семья
+          - Этнос
+          - Национальность
+          - Религия
+          - Профессия
+          - Статус Курения
+          - Частота пасс кур
+          - Алкоголь
+          - Сова/Жаворонок/Голубь
+          test_size: 0.2
+          iterations: 10
+          loss_function: MultiLogloss
+          eval_metric: MultiLogloss
+          learning_rate: 0.01
+          bootstrap_type: Bayesian
+          boost_from_average: false
+          ctr_leaf_count_limit: 3
+          leaf_estimation_iterations: 1
+          leaf_estimation_method: Gradient
+          model_catboost_path: models/model_catboost.joblib
+          model_lgbm_path: models/model_lgbm.joblib
+          X_test_path: data/processed/X_test_data.pkl
+          Y_test_path: data/processed/Y_test_data.pkl
+    outs:
+    - path: catboost_info/learn_error.tsv
+      md5: 3622ff1b0ca0c410a8b6ca361acd1c87
+      size: 168
+    - path: data/processed/X_test_data.pkl
+      md5: faadda5740189c47de3f1d4c40152d80
+      size: 12879
+    - path: data/processed/Y_test_data.pkl
+      md5: 0e22b9bc3aea399a9f87d0ee9842c8c6
+      size: 1877
+    - path: models/model_catboost.joblib
+      md5: 39e79e5e2b094b6f88e3b684d2911139
+      size: 89640
+    - path: models/model_lgbm.joblib
+      md5: 60d532691e4b6fb6c9ab93f04b26017e
+      size: 6107591
+  evaluate:
+    cmd: python -m src.models.predict_model
+    deps:
+    - path: data/processed/X_test_data.pkl
+      md5: faadda5740189c47de3f1d4c40152d80
+      size: 12879
+    - path: data/processed/Y_test_data.pkl
+      md5: 0e22b9bc3aea399a9f87d0ee9842c8c6
+      size: 1877
+    - path: models/model_catboost.joblib
+      md5: 39e79e5e2b094b6f88e3b684d2911139
+      size: 89640
+    - path: models/model_lgbm.joblib
+      md5: 60d532691e4b6fb6c9ab93f04b26017e
+      size: 6107591
+    - path: src/config.py
+      md5: 3e4a7be725268dffcddc10290c19e4b1
+      size: 2342
+    - path: src/models/functions.py
+      md5: 8a4b4f02f391ac7f3fbcee3d992cd5d3
+      size: 4778
+    - path: src/models/predict_model.py
+      md5: 42d0d6197eaff9111af5324b64e7b897
+      size: 880
+    - path: src/models/train_model.py
+      md5: 14cbed9bad7647f931b51c5554b01cd5
+      size: 2186
+    params:
+      params.yaml:
+        evaluate:
+          score_metric: f1
+          score_path_catboost: reports/metrics_catboost.json
+          score_path_lightgbm: reports/metrics_lightgbm.json
+          score_path_rocauc_samples_catboost: reports/metrics_rocauc_catboost.csv
+          score_path_rocauc_samples_lgbm: reports/metrics_rocauc_lgbm.csv
+        train:
+          COL:
+          - Пол
+          - Семья
+          - Этнос
+          - Национальность
+          - Религия
+          - Профессия
+          - Вы работаете?
+          - Выход на пенсию
+          - Прекращение работы по болезни
+          - Сахарный диабет
+          - Гепатит
+          - Онкология
+          - Хроническое заболевание легких
+          - Бронжиальная астма
+          - 'Туберкулез легких '
+          - ВИЧ/СПИД
+          - Регулярный прим лекарственных средств
+          - Травмы за год
+          - Переломы
+          - Статус Курения
+          - Пассивное курение
+          - Частота пасс кур
+          - Алкоголь
+          - Сова/Жаворонок/Голубь
+          - Часов сна
+          - Сон после обеда
+          - Спорт, клубы
+          - Религия, клубы
+          - Образование_ord
+          - Возраст курения
+          - Сигарет в день
+          - Возраст алког
+          CATEGORIES_COL_AFTER_PREP:
+          - Пол
+          - Семья
+          - Этнос
+          - Национальность
+          - Религия
+          - Профессия
+          - Статус Курения
+          - Частота пасс кур
+          - Алкоголь
+          - Сова/Жаворонок/Голубь
+          test_size: 0.2
+          iterations: 10
+          loss_function: MultiLogloss
+          eval_metric: MultiLogloss
+          learning_rate: 0.01
+          bootstrap_type: Bayesian
+          boost_from_average: false
+          ctr_leaf_count_limit: 3
+          leaf_estimation_iterations: 1
+          leaf_estimation_method: Gradient
+          model_catboost_path: models/model_catboost.joblib
+          model_lgbm_path: models/model_lgbm.joblib
+          X_test_path: data/processed/X_test_data.pkl
+          Y_test_path: data/processed/Y_test_data.pkl
+    outs:
+    - path: reports/metrics_catboost.json
+      md5: dfe6c914b95b04ffbb18aebf92781e27
+      size: 112
+    - path: reports/metrics_lightgbm.json
+      md5: 16a1067609784a1e68f89c7ac18db90d
+      size: 113
+    - path: reports/metrics_rocauc_catboost.csv
+      md5: 2f220ddc1715c7687fb5491a5b7493f7
+      size: 120
+    - path: reports/metrics_rocauc_lgbm.csv
+      md5: a14714646fef76a979517f13749f1ed6
+      size: 118
+  inference:
+    cmd: python -m src.inference.inference DATA_FILEPATH=data/raw/test.csv
+    deps:
+    - path: data/raw/test.csv
+      md5: a34d239835317e59b1b9f2fec27fa427
+      size: 249580
+    - path: models/model_catboost.joblib
+      md5: 35c73cf69931000b51124c86bfadab25
+      size: 4862762
+    - path: models/model_lgbm.joblib
+      md5: 02048b51e212ca5c00b09e773eeb26ea
+      size: 6108460
+    - path: src/config.py
+      md5: 3e4a7be725268dffcddc10290c19e4b1
+      size: 2342
+    - path: src/inference/inference.py
+      md5: 5de4feda8eb23e2cec1052b592c46677
+      size: 2287
+    params:
+      params.yaml:
+        train:
+          COL:
+          - Пол
+          - Семья
+          - Этнос
+          - Национальность
+          - Религия
+          - Профессия
+          - Вы работаете?
+          - Выход на пенсию
+          - Прекращение работы по болезни
+          - Сахарный диабет
+          - Гепатит
+          - Онкология
+          - Хроническое заболевание легких
+          - Бронжиальная астма
+          - 'Туберкулез легких '
+          - ВИЧ/СПИД
+          - Регулярный прим лекарственных средств
+          - Травмы за год
+          - Переломы
+          - Статус Курения
+          - Пассивное курение
+          - Частота пасс кур
+          - Алкоголь
+          - Сова/Жаворонок/Голубь
+          - Часов сна
+          - Сон после обеда
+          - Спорт, клубы
+          - Религия, клубы
+          - Образование_ord
+          - Возраст курения
+          - Сигарет в день
+          - Возраст алког
+          CATEGORIES_COL_AFTER_PREP:
+          - Пол
+          - Семья
+          - Этнос
+          - Национальность
+          - Религия
+          - Профессия
+          - Статус Курения
+          - Частота пасс кур
+          - Алкоголь
+          - Сова/Жаворонок/Голубь
+          test_size: 0.2
+          iterations: 999
+          loss_function: MultiLogloss
+          eval_metric: MultiLogloss
+          learning_rate: 0.01
+          bootstrap_type: Bayesian
+          boost_from_average: false
+          ctr_leaf_count_limit: 3
+          leaf_estimation_iterations: 1
+          leaf_estimation_method: Gradient
+          model_catboost_path: models/model_catboost.joblib
+          model_lgbm_path: models/model_lgbm.joblib
+          X_test_path: data/processed/X_test_data.pkl
+          Y_test_path: data/processed/Y_test_data.pkl
