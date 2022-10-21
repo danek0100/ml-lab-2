@@ -51,6 +51,7 @@ stages:
     params:
       - processed_paths
       - train
+      - train_path
     plots:
       - catboost_info/learn_error.tsv
 
@@ -67,7 +68,7 @@ stages:
       - data/processed/Y_test_data.pkl
     params:
       - evaluate
-      - train
+      - train_path
     metrics:
       - reports/metrics_catboost.json
       - reports/metrics_xgboost.json

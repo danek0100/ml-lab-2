@@ -10,8 +10,8 @@ stages:
       md5: 6d98f248d32b04638250825193b64c81
       size: 462135
     - path: src/config.py
-      md5: 72dd2a887879e7187a65d779798e8bae
-      size: 2260
+      md5: 15013bf10c04b5d0f442bf2bb39b1035
+      size: 2280
     - path: src/data/make_dataset.py
       md5: 48a027de4a6b8d3d94c42c8e7a2d2ce7
       size: 2200
@@ -161,8 +161,8 @@ stages:
       md5: c136026b70acecece648ba3328f59473
       size: 294201
     - path: src/config.py
-      md5: 72dd2a887879e7187a65d779798e8bae
-      size: 2260
+      md5: 15013bf10c04b5d0f442bf2bb39b1035
+      size: 2280
     - path: src/features/build_features.py
       md5: c6536bd9320feae4b84963055ba5de94
       size: 1124
@@ -306,8 +306,8 @@ stages:
       md5: d7db0a21bb6f2e7356cbb572972052cd
       size: 305648
     - path: src/config.py
-      md5: 72dd2a887879e7187a65d779798e8bae
-      size: 2260
+      md5: 15013bf10c04b5d0f442bf2bb39b1035
+      size: 2280
     - path: src/models/functions.py
       md5: 1f0621813b9d2e510a67b7ff66c91889
       size: 756
@@ -331,6 +331,7 @@ stages:
           eta: 0.2
           tree_method: exact
           random_state: 77
+        train_path:
           model_catboost_path: models/model_catboost.joblib
           model_xgboost_path: models/model_xgboost.joblib
           X_test_path: data/processed/X_test_data.pkl
@@ -346,7 +347,7 @@ stages:
       md5: f357627b4d56172b23a74a52bd6d7787
       size: 4263
     - path: models/model_catboost.joblib
-      md5: 574597669f6906deb5e60dbc562987b7
+      md5: e5f0fb018a9b9028983189b8c676e8fb
       size: 17952
     - path: models/model_xgboost.joblib
       md5: 5db0a9dd3d61976ce5a215bb53186280
@@ -361,14 +362,14 @@ stages:
       md5: f357627b4d56172b23a74a52bd6d7787
       size: 4263
     - path: models/model_catboost.joblib
-      md5: 574597669f6906deb5e60dbc562987b7
+      md5: e5f0fb018a9b9028983189b8c676e8fb
       size: 17952
     - path: models/model_xgboost.joblib
       md5: 5db0a9dd3d61976ce5a215bb53186280
       size: 437446
     - path: src/config.py
-      md5: 72dd2a887879e7187a65d779798e8bae
-      size: 2260
+      md5: 15013bf10c04b5d0f442bf2bb39b1035
+      size: 2280
     - path: src/models/functions.py
       md5: 1f0621813b9d2e510a67b7ff66c91889
       size: 756
@@ -386,17 +387,7 @@ stages:
           score_path_xgboost: reports/metrics_xgboost.json
           score_path_rocauc_samples_catboost: reports/metrics_rocauc_catboost.csv
           score_path_rocauc_samples_lgbm: reports/metrics_rocauc_lgbm.csv
-        train:
-          test_size: 0.2
-          iterations: 15
-          loss_function: RMSE
-          learning_rate: 0.2
-          ctr_leaf_count_limit: 20
-          max_depth: 4
-          booster: dart
-          eta: 0.2
-          tree_method: exact
-          random_state: 77
+        train_path:
           model_catboost_path: models/model_catboost.joblib
           model_xgboost_path: models/model_xgboost.joblib
           X_test_path: data/processed/X_test_data.pkl
@@ -415,14 +406,14 @@ stages:
       md5: df398776b248dc067500bd4ee8fd432f
       size: 452863
     - path: models/model_catboost.joblib
-      md5: 574597669f6906deb5e60dbc562987b7
+      md5: e5f0fb018a9b9028983189b8c676e8fb
       size: 17952
     - path: models/model_xgboost.joblib
       md5: 5db0a9dd3d61976ce5a215bb53186280
       size: 437446
     - path: src/config.py
-      md5: 72dd2a887879e7187a65d779798e8bae
-      size: 2260
+      md5: 15013bf10c04b5d0f442bf2bb39b1035
+      size: 2280
     - path: src/inference/inference.py
       md5: 66ac64738ef5581ace05aed268a5a410
       size: 1841
@@ -439,7 +430,3 @@ stages:
           eta: 0.2
           tree_method: exact
           random_state: 77
-          model_catboost_path: models/model_catboost.joblib
-          model_xgboost_path: models/model_xgboost.joblib
-          X_test_path: data/processed/X_test_data.pkl
-          Y_test_path: data/processed/Y_test_data.pkl

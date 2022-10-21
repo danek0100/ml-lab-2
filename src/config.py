@@ -48,10 +48,10 @@ tree_method = config['train']['tree_method']
 
 random_state = config['train']['random_state']
 
-model_catboost_path = config['train']['model_catboost_path']
-model_xgboost_path = config['train']['model_xgboost_path']
-X_test_path = config['train']['X_test_path']
-Y_test_path = config['train']['Y_test_path']
+model_catboost_path = config['train_path']['model_catboost_path']
+model_xgboost_path = config['train_path']['model_xgboost_path']
+X_test_path = config['train_path']['X_test_path']
+Y_test_path = config['train_path']['Y_test_path']
 
 # Evaluate
 score_metric = config['evaluate']['score_metric']
