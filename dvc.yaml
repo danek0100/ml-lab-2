@@ -45,7 +45,7 @@ stages:
       - data/processed/data_for_train.pkl
     outs:
       - models/model_catboost.joblib
-      - models/model_lgbm.joblib
+      - models/model_xgboost.joblib
       - data/processed/X_test_data.pkl
       - data/processed/Y_test_data.pkl
     params:
@@ -62,7 +62,7 @@ stages:
       - src/models/train_model.py
       - src/models/functions.py
       - models/model_catboost.joblib
-      - models/model_lgbm.joblib
+      - models/model_xgboost.joblib
       - data/processed/X_test_data.pkl
       - data/processed/Y_test_data.pkl
     params:
@@ -70,10 +70,7 @@ stages:
       - train
     metrics:
       - reports/metrics_catboost.json
-      - reports/metrics_lightgbm.json
-    plots:
-      - reports/metrics_rocauc_catboost.csv
-      - reports/metrics_rocauc_lgbm.csv
+      - reports/metrics_xgboost.json
 
   inference:
     cmd: python -m src.inference.inference DATA_FILEPATH=data/raw/test.csv
@@ -82,6 +79,6 @@ stages:
       - src/config.py
       - src/inference/inference.py
       - models/model_catboost.joblib
-      - models/model_lgbm.joblib
+      - models/model_xgboost.joblib
     params:
       - train

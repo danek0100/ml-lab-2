@@ -1,65 +1,79 @@
 import joblib
-import category_encoders as ce
-import lightgbm as ltb
+import logging
+import pandas as pd
 
 from sklearn.preprocessing import *
 from sklearn.compose import *
 from sklearn.pipeline import *
-from sklearn.multioutput import *
-from catboost import CatBoostClassifier
+from sklearn.model_selection import train_test_split
 
-from src.models.functions import *
+from catboost import CatBoostRegressor
+import category_encoders as ce
+import xgboost
+
 from src.config import *
 from src.utils import save_as_pickle
 
-train = pd.read_pickle(processed_data_for_train_pkl)
-target = pd.read_pickle(target_data_train_pkl)
 
-X_train, Y_train, X_test, Y_test = split_data(train, target, test_size=test_size)
+def main():
+    logger = logging.getLogger(__name__)
+    logger.info('Train Target:')
 
-save_as_pickle(X_test, X_test_path)
-save_as_pickle(Y_test, Y_test_path)
+    logger.log(logging.INFO, "Starting reading data from pkl...")
+    train = pd.read_pickle(processed_data_for_train_pkl)
+    target = pd.read_pickle(target_data_train_pkl)
+    logger.log(logging.INFO, "Data successfully read")
 
-# Train first model
-model = CatBoostClassifier(iterations=iterations, loss_function=loss_function,
-                           eval_metric=eval_metric, learning_rate=learning_rate,
-                           bootstrap_type=bootstrap_type, boost_from_average=boost_from_average,
-                           ctr_leaf_count_limit=ctr_leaf_count_limit,
-                           leaf_estimation_iterations=leaf_estimation_iterations,
-                           leaf_estimation_method=leaf_estimation_method,
-                           cat_features=CATEGORIES_COL_AFTER_PREP)
+    logger.log(logging.INFO, "Start data split process")
+    X_train, X_test, Y_train, Y_test = train_test_split(train, target, test_size=test_size, random_state=random_state)
+    logger.log(logging.INFO, "Data splited")
 
-model_cast = MultiOutputClassifier(model)
+    logger.log(logging.INFO, "Selections saving")
+    save_as_pickle(X_test, X_test_path)
+    save_as_pickle(Y_test, Y_test_path)
+    logger.log(logging.INFO, "Selections saved")
 
-pipeline_catboost = Pipeline([('model_cast', model_cast)])
-pipeline_catboost.fit(X_train, Y_train)
+    # Train CatBoost model
+    logger.log(logging.INFO, "Starting CatBoost train")
+    model = CatBoostRegressor(
+        iterations=iterations,
+        max_depth=max_depth,
+        ctr_leaf_count_limit=ctr_leaf_count_limit,
+        loss_function=loss_function,
+        learning_rate=learning_rate,
+        cat_features=CAT_COLS)
 
-joblib.dump(pipeline_catboost, model_catboost_path)
+    pipeline_catboost = Pipeline([('model_cast', model)])
+    pipeline_catboost.fit(X_train, Y_train)
+    joblib.dump(pipeline_catboost, model_catboost_path)
+    logger.log(logging.INFO, "CatBoost was trained and model was saved")
+
+    # Train xgboost model
+    logger.log(logging.INFO, "Starting XGBoost train")
+    real_pipe = Pipeline([('scaler', StandardScaler())])
+    cat_pipe = Pipeline([('ohe', OneHotEncoder(handle_unknown='ignore', sparse=False))])
+
+    pre_process_pipe = ColumnTransformer(transformers=[
+        ('real_cols', real_pipe, REAL_COLS),
+        ('cat_cols', cat_pipe, CAT_COLS),
+        ('cat_bost_cols', ce.CountEncoder(), CAT_COLS),
+    ]
+    )
+
+    model = xgboost.XGBRegressor(
+        booster=booster,
+        eta=eta,
+        tree_method=tree_method
+    )
+    model_pipe = Pipeline([('preprocess', pre_process_pipe), ('model', model)])
+    pipeline_xg = model_pipe
+    pipeline_xg.fit(X_train, Y_train)
+    joblib.dump(pipeline_xg, model_xgboost_path)
+    logger.log(logging.INFO, "XGBoost was trained and model was saved")
 
 
-# Train second model
-real_pipe = Pipeline([('scaler', StandardScaler())])
+if __name__ == '__main__':
+    log_fmt = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    logging.basicConfig(level=logging.INFO, format=log_fmt)
 
-cat_pipe = Pipeline([('ohe', OneHotEncoder(handle_unknown='ignore', sparse=False))])
-
-preprocess_pipe = ColumnTransformer(transformers=[
-    ('real_cols', real_pipe, REAL_COLS),
-    ('cat_cols', cat_pipe, CATEGORIES_COL_AFTER_PREP),
-    ('cat_boost_cols', ce.CountEncoder(), CATEGORIES_COL_AFTER_PREP),  # for work with cat_features
-]
-)
-
-model_ltb = ltb.LGBMClassifier(
-    boosting_type='dart',
-    num_leaves=20,
-    learning_rate=0.01,
-    n_estimators=500
-)
-
-model_pipe = Pipeline([('preprocess', preprocess_pipe), ('model', model_ltb)])
-
-pipeline_ltb = MultiOutputClassifier(model_pipe, n_jobs=4)
-pipeline_ltb.fit(X_train, Y_train)
-
-joblib.dump(pipeline_ltb, model_lgbm_path)
-
+    main()

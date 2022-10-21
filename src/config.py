@@ -35,28 +35,25 @@ processed_test_pkl = config['processed_paths']['processed_test_pkl']
 processed_data_for_train_pkl = config['processed_paths']['processed_data_for_train_pkl']
 
 # Training
-COL = config['train']['COL']
-CATEGORIES_COL_AFTER_PREP = config['train']['CATEGORIES_COL_AFTER_PREP']
 test_size = config['train']['test_size']
 iterations = config['train']['iterations']
 loss_function = config['train']['loss_function']
-eval_metric = config['train']['eval_metric']
 learning_rate = config['train']['learning_rate']
-bootstrap_type = config['train']['bootstrap_type']
-boost_from_average = config['train']['boost_from_average']
 ctr_leaf_count_limit = config['train']['ctr_leaf_count_limit']
-leaf_estimation_iterations = config['train']['leaf_estimation_iterations']
-leaf_estimation_method = config['train']['leaf_estimation_method']
+max_depth = config['train']['max_depth']
+
+booster = config['train']['booster']
+eta = config['train']['eta']
+tree_method = config['train']['tree_method']
+
+random_state = config['train']['random_state']
 
 model_catboost_path = config['train']['model_catboost_path']
-model_lgbm_path = config['train']['model_lgbm_path']
+model_xgboost_path = config['train']['model_xgboost_path']
 X_test_path = config['train']['X_test_path']
 Y_test_path = config['train']['Y_test_path']
 
 # Evaluate
 score_metric = config['evaluate']['score_metric']
 score_path_catboost = config['evaluate']['score_path_catboost']
-score_path_lightgbm = config['evaluate']['score_path_lightgbm']
-score_path_rocauc_samples_catboost = config['evaluate']['score_path_rocauc_samples_catboost']
-score_path_rocauc_samples_lgbm = config['evaluate']['score_path_rocauc_samples_lgbm']
-
+score_path_xgboost = config['evaluate']['score_path_xgboost']

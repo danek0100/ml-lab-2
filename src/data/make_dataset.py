@@ -5,7 +5,6 @@ import os
 import pandas as pd
 
 from pathlib import Path
-from dotenv import find_dotenv, load_dotenv
 from src.data.preprocess import extract_target, pre_process_target, pre_process_df, pre_process_val
 from src.config import *
 from src.utils import save_as_pickle
@@ -60,9 +59,5 @@ if __name__ == '__main__':
 
     # not used in this stub but often useful for finding various files
     project_dir = Path(__file__).resolve().parents[2]
-
-    # find .env automagically by walking up directories until it's found, then
-    # load up the .env entries as environment variables
-    load_dotenv(find_dotenv())
 
     main()

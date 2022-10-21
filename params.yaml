@@ -27,27 +27,29 @@ processed_paths:
   processed_data_for_train_pkl: 'data/processed/data_for_train.pkl'
 
 train:
-  COL: ['Пол', 'Семья', 'Этнос', 'Национальность', 'Религия', 'Профессия', 'Вы работаете?', 'Выход на пенсию', 'Прекращение работы по болезни', 'Сахарный диабет', 'Гепатит', 'Онкология', 'Хроническое заболевание легких', 'Бронжиальная астма', 'Туберкулез легких ', 'ВИЧ/СПИД', 'Регулярный прим лекарственных средств', 'Травмы за год', 'Переломы', 'Статус Курения', 'Пассивное курение', 'Частота пасс кур', 'Алкоголь', 'Сова/Жаворонок/Голубь', 'Часов сна', 'Сон после обеда', 'Спорт, клубы', 'Религия, клубы', 'Образование_ord', 'Возраст курения', 'Сигарет в день', 'Возраст алког']
-  CATEGORIES_COL_AFTER_PREP: ['Пол','Семья', 'Этнос', 'Национальность', 'Религия', 'Профессия', 'Статус Курения', 'Частота пасс кур', 'Алкоголь', 'Сова/Жаворонок/Голубь']
+  #catboost
   test_size: 0.2
   iterations: 10
-  loss_function: 'MultiLogloss'
-  eval_metric: 'MultiLogloss'
-  learning_rate: 0.01
-  bootstrap_type: 'Bayesian'
-  boost_from_average: False
-  ctr_leaf_count_limit: 3
-  leaf_estimation_iterations: 1
-  leaf_estimation_method: 'Gradient'
+  loss_function: 'RMSE'
+  learning_rate: 0.2
+  ctr_leaf_count_limit: 20
+  max_depth: 4
+
+  #xgboost
+  booster: 'dart'
+  eta: 0.2
+  tree_method: 'exact'
+
+  random_state: 77
 
   model_catboost_path: 'models/model_catboost.joblib'
-  model_lgbm_path: 'models/model_lgbm.joblib'
+  model_xgboost_path: 'models/model_xgboost.joblib'
   X_test_path: 'data/processed/X_test_data.pkl'
   Y_test_path: 'data/processed/Y_test_data.pkl'
 
 evaluate:
   score_metric: 'f1'
   score_path_catboost: 'reports/metrics_catboost.json'
-  score_path_lightgbm: 'reports/metrics_lightgbm.json'
+  score_path_xgboost: 'reports/metrics_xgboost.json'
   score_path_rocauc_samples_catboost: 'reports/metrics_rocauc_catboost.csv'
   score_path_rocauc_samples_lgbm: 'reports/metrics_rocauc_lgbm.csv'

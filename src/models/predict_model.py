@@ -1,26 +1,30 @@
 import pandas as pd
 import joblib
+import logging
 from src.config import *
-from src.models.functions import metrics_print_for_catboost, metrics_print_for_lightgbm
-
-X_test = pd.read_pickle(X_test_path)
-Y_test = pd.read_pickle(Y_test_path)
+from src.models.functions import print_metric
 
 
-# Predict for first model
-model_catboost = joblib.load(model_catboost_path)
+def main():
+    X_test = pd.read_pickle(X_test_path)
+    Y_test = pd.read_pickle(Y_test_path)
 
-y_predict = model_catboost.predict(X_test)
-y_predict_proba = model_catboost.predict_proba(X_test)
+    # Predict for CatBoost model
+    catboost_model = joblib.load(model_catboost_path)
 
-metrics_print_for_catboost(y_predict, y_predict_proba, Y_test, 'micro')
-metrics_print_for_catboost(y_predict, y_predict_proba, Y_test, 'samples')
+    y_predict = catboost_model.predict(X_test)
+    print_metric(Y_test, y_predict, score_path_catboost)
 
-# Predict for second model
-model_lgbm = joblib.load(model_lgbm_path)
+    # Predict for XGBoost model
+    xgboost_model = joblib.load(model_xgboost_path)
 
-y_predict = model_lgbm.predict(X_test)
-y_predict_proba = model_lgbm.predict_proba(X_test)
+    y_predict = xgboost_model.predict(X_test)
+    print_metric(Y_test, y_predict, score_path_xgboost)
 
-metrics_print_for_lightgbm(y_predict, y_predict_proba, Y_test, 'micro')
-metrics_print_for_lightgbm(y_predict, y_predict_proba, Y_test, 'samples')
+
+if __name__ == '__main__':
+    log_fmt = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    logging.basicConfig(level=logging.INFO, format=log_fmt)
+
+    main()
+
