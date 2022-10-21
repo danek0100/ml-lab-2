@@ -10,8 +10,8 @@ stages:
       md5: 6d98f248d32b04638250825193b64c81
       size: 462135
     - path: src/config.py
-      md5: ed4bfbb5b36a014c17e19f8ae485a84e
-      size: 2444
+      md5: 72dd2a887879e7187a65d779798e8bae
+      size: 2260
     - path: src/data/make_dataset.py
       md5: 48a027de4a6b8d3d94c42c8e7a2d2ce7
       size: 2200
@@ -161,8 +161,8 @@ stages:
       md5: c136026b70acecece648ba3328f59473
       size: 294201
     - path: src/config.py
-      md5: ed4bfbb5b36a014c17e19f8ae485a84e
-      size: 2444
+      md5: 72dd2a887879e7187a65d779798e8bae
+      size: 2260
     - path: src/features/build_features.py
       md5: c6536bd9320feae4b84963055ba5de94
       size: 1124
@@ -306,8 +306,8 @@ stages:
       md5: d7db0a21bb6f2e7356cbb572972052cd
       size: 305648
     - path: src/config.py
-      md5: ed4bfbb5b36a014c17e19f8ae485a84e
-      size: 2444
+      md5: 72dd2a887879e7187a65d779798e8bae
+      size: 2260
     - path: src/models/functions.py
       md5: 1f0621813b9d2e510a67b7ff66c91889
       size: 756
@@ -322,7 +322,7 @@ stages:
           processed_data_for_train_pkl: data/processed/data_for_train.pkl
         train:
           test_size: 0.2
-          iterations: 10
+          iterations: 15
           loss_function: RMSE
           learning_rate: 0.2
           ctr_leaf_count_limit: 20
@@ -337,8 +337,8 @@ stages:
           Y_test_path: data/processed/Y_test_data.pkl
     outs:
     - path: catboost_info/learn_error.tsv
-      md5: 49ece1c042ce770d59a3ec0f42d8bc09
-      size: 150
+      md5: b0a06c26bcef84328887987ddd4f68d8
+      size: 225
     - path: data/processed/X_test_data.pkl
       md5: a27d0e0b10ffb1efca9f28b1a4668724
       size: 70228
@@ -346,8 +346,8 @@ stages:
       md5: f357627b4d56172b23a74a52bd6d7787
       size: 4263
     - path: models/model_catboost.joblib
-      md5: 230e9667101424a5c9297b66ad056d4c
-      size: 15940
+      md5: 574597669f6906deb5e60dbc562987b7
+      size: 17952
     - path: models/model_xgboost.joblib
       md5: 5db0a9dd3d61976ce5a215bb53186280
       size: 437446
@@ -361,14 +361,14 @@ stages:
       md5: f357627b4d56172b23a74a52bd6d7787
       size: 4263
     - path: models/model_catboost.joblib
-      md5: 230e9667101424a5c9297b66ad056d4c
-      size: 15940
+      md5: 574597669f6906deb5e60dbc562987b7
+      size: 17952
     - path: models/model_xgboost.joblib
       md5: 5db0a9dd3d61976ce5a215bb53186280
       size: 437446
     - path: src/config.py
-      md5: ed4bfbb5b36a014c17e19f8ae485a84e
-      size: 2444
+      md5: 72dd2a887879e7187a65d779798e8bae
+      size: 2260
     - path: src/models/functions.py
       md5: 1f0621813b9d2e510a67b7ff66c91889
       size: 756
@@ -388,7 +388,7 @@ stages:
           score_path_rocauc_samples_lgbm: reports/metrics_rocauc_lgbm.csv
         train:
           test_size: 0.2
-          iterations: 10
+          iterations: 15
           loss_function: RMSE
           learning_rate: 0.2
           ctr_leaf_count_limit: 20
@@ -403,8 +403,8 @@ stages:
           Y_test_path: data/processed/Y_test_data.pkl
     outs:
     - path: reports/metrics_catboost.json
-      md5: f108ba0d8ed24c23dbae3134712b8b50
-      size: 107
+      md5: 7c16576972277340e45778120d079923
+      size: 108
     - path: reports/metrics_xgboost.json
       md5: e134b0a6a1414d77938c385d7ddadc7f
       size: 107
@@ -415,14 +415,14 @@ stages:
       md5: df398776b248dc067500bd4ee8fd432f
       size: 452863
     - path: models/model_catboost.joblib
-      md5: 230e9667101424a5c9297b66ad056d4c
-      size: 15940
+      md5: 574597669f6906deb5e60dbc562987b7
+      size: 17952
     - path: models/model_xgboost.joblib
       md5: 5db0a9dd3d61976ce5a215bb53186280
       size: 437446
     - path: src/config.py
-      md5: ed4bfbb5b36a014c17e19f8ae485a84e
-      size: 2444
+      md5: 72dd2a887879e7187a65d779798e8bae
+      size: 2260
     - path: src/inference/inference.py
       md5: 66ac64738ef5581ace05aed268a5a410
       size: 1841
@@ -430,7 +430,7 @@ stages:
       params.yaml:
         train:
           test_size: 0.2
-          iterations: 10
+          iterations: 15
           loss_function: RMSE
           learning_rate: 0.2
           ctr_leaf_count_limit: 20

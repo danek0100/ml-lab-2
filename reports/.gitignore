@@ -5,3 +5,4 @@
 /metrics_rocauc_lgbm.json
 /metrics_rocauc_catboost.csv
 /metrics_rocauc_lgbm.csv
+/metrics_xgboost.json

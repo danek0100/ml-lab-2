@@ -1,3 +1,4 @@
 /model.joblib
 /model_catboost.joblib
 /model_lgbm.joblib
+/model_xgboost.joblib

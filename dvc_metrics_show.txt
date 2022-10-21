@@ -1,0 +1,3 @@
+Path                           EV       MAPE     MSE               R2
+reports\metrics_catboost.json  0.83586  0.13098  1333687232.26862  0.83413
+reports\metrics_xgboost.json   0.89377  0.09536  857949573.12227   0.8933
