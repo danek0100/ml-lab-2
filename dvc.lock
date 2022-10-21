@@ -322,13 +322,13 @@ stages:
           processed_data_for_train_pkl: data/processed/data_for_train.pkl
         train:
           test_size: 0.2
-          iterations: 15
+          iterations: 1000
           loss_function: RMSE
           learning_rate: 0.2
-          ctr_leaf_count_limit: 20
+          ctr_leaf_count_limit: 5
           max_depth: 4
-          booster: dart
-          eta: 0.2
+          booster: gbtree
+          eta: 0.1
           tree_method: exact
           random_state: 77
         train_path:
@@ -338,8 +338,8 @@ stages:
           Y_test_path: data/processed/Y_test_data.pkl
     outs:
     - path: catboost_info/learn_error.tsv
-      md5: b0a06c26bcef84328887987ddd4f68d8
-      size: 225
+      md5: c67467d194d89ceb30a0927d190ae7e5
+      size: 15788
     - path: data/processed/X_test_data.pkl
       md5: a27d0e0b10ffb1efca9f28b1a4668724
       size: 70228
@@ -347,11 +347,11 @@ stages:
       md5: f357627b4d56172b23a74a52bd6d7787
       size: 4263
     - path: models/model_catboost.joblib
-      md5: e5f0fb018a9b9028983189b8c676e8fb
-      size: 17952
+      md5: 31ee3c10b00a2ed0f891836bf008eae4
+      size: 347857
     - path: models/model_xgboost.joblib
-      md5: 5db0a9dd3d61976ce5a215bb53186280
-      size: 437446
+      md5: 3aba1b9b875f5a69ec6dbe015d18d875
+      size: 448261
   evaluate:
     cmd: python -m src.models.predict_model
     deps:
@@ -362,11 +362,11 @@ stages:
       md5: f357627b4d56172b23a74a52bd6d7787
       size: 4263
     - path: models/model_catboost.joblib
-      md5: e5f0fb018a9b9028983189b8c676e8fb
-      size: 17952
+      md5: 31ee3c10b00a2ed0f891836bf008eae4
+      size: 347857
     - path: models/model_xgboost.joblib
-      md5: 5db0a9dd3d61976ce5a215bb53186280
-      size: 437446
+      md5: 3aba1b9b875f5a69ec6dbe015d18d875
+      size: 448261
     - path: src/config.py
       md5: 15013bf10c04b5d0f442bf2bb39b1035
       size: 2280
@@ -394,11 +394,11 @@ stages:
           Y_test_path: data/processed/Y_test_data.pkl
     outs:
     - path: reports/metrics_catboost.json
-      md5: 7c16576972277340e45778120d079923
-      size: 108
-    - path: reports/metrics_xgboost.json
-      md5: e134b0a6a1414d77938c385d7ddadc7f
+      md5: 4443b35daca5646f935261c28d5c1272
       size: 107
+    - path: reports/metrics_xgboost.json
+      md5: 908f97380fc391a80b943b79d29e29c4
+      size: 106
   inference:
     cmd: python -m src.inference.inference DATA_FILEPATH=data/raw/test.csv
     deps:
@@ -406,11 +406,11 @@ stages:
       md5: df398776b248dc067500bd4ee8fd432f
       size: 452863
     - path: models/model_catboost.joblib
-      md5: e5f0fb018a9b9028983189b8c676e8fb
-      size: 17952
+      md5: 31ee3c10b00a2ed0f891836bf008eae4
+      size: 347857
     - path: models/model_xgboost.joblib
-      md5: 5db0a9dd3d61976ce5a215bb53186280
-      size: 437446
+      md5: 3aba1b9b875f5a69ec6dbe015d18d875
+      size: 448261
     - path: src/config.py
       md5: 15013bf10c04b5d0f442bf2bb39b1035
       size: 2280
@@ -421,12 +421,12 @@ stages:
       params.yaml:
         train:
           test_size: 0.2
-          iterations: 15
+          iterations: 1000
           loss_function: RMSE
           learning_rate: 0.2
-          ctr_leaf_count_limit: 20
+          ctr_leaf_count_limit: 5
           max_depth: 4
-          booster: dart
-          eta: 0.2
+          booster: gbtree
+          eta: 0.1
           tree_method: exact
           random_state: 77

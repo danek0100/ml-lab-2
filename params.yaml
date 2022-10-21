@@ -1,56 +1,150 @@
 data_load:
-  train_csv: 'data/raw/train.csv'
-  test_csv: 'data/raw/test.csv'
+  train_csv: data/raw/train.csv
+  test_csv: data/raw/test.csv
 
 preprocess_category:
-  TARGET_COL: [ 'SalePrice' ]
-  ID_COL: 'Id'
-  CAT_COLS: [ 'MSZoning', 'Street', 'Alley', 'LotShape', 'LandContour', 'Utilities', 'LotConfig', 'LandSlope', 'Neighborhood', 'Condition1', 'Condition2', 'BldgType', 'HouseStyle', 'RoofStyle', 'RoofMatl', 'Exterior1st', 'Exterior2nd', 'MasVnrType', 'ExterQual', 'ExterCond', 'Foundation', 'BsmtQual', 'BsmtCond', 'BsmtExposure', 'BsmtFinType1', 'BsmtFinType2', 'Heating', 'HeatingQC', 'CentralAir', 'Electrical', 'KitchenQual', 'Functional', 'FireplaceQu', 'GarageType', 'GarageFinish', 'GarageQual', 'GarageCond', 'PavedDrive', 'PoolQC', 'Fence', 'MiscFeature', 'SaleType', 'SaleCondition' ]
-  REAL_COLS: [ 'MSSubClass', 'OverallQual', 'OverallCond', 'LotFrontage', 'LotArea', 'MasVnrArea', 'BsmtFinSF1', 'BsmtFinSF2', 'BsmtUnfSF', 'TotalBsmtSF', '1stFlrSF', '2ndFlrSF', 'LowQualFinSF', 'GrLivArea', 'BsmtFullBath', 'BsmtHalfBath', 'FullBath', 'HalfBath', 'BedroomAbvGr', 'KitchenAbvGr', 'TotRmsAbvGrd','Fireplaces', 'GarageCars', 'GarageArea', 'WoodDeckSF', 'OpenPorchSF', 'EnclosedPorch', '3SsnPorch', 'ScreenPorch', 'PoolArea', 'MiscVal' ]
-  DATA_COLS: [ 'YearBuilt', 'YearRemodAdd', 'GarageYrBlt', 'MoSold', 'YrSold' ]
-
-  BASEMENT_COLS: [ 'BsmtCond', 'BsmtExposure', 'BsmtFinType1', 'BsmtFinType2' ]
-  MASONRY_COLS: [ 'MasVnrArea' ]
-  GARAGE_COLS: [ 'GarageFinish', 'GarageQual', 'GarageCond' ]
-  GARAGE_COL: [ 'GarageYrBlt' ]
-
-  MAX_NUMBER_NAN_VALUE_COLS: [ 'PoolQC', 'Fence', 'MiscFeature', 'Alley', 'BsmtQual', 'GarageType' , 'FireplaceQu' ]
+  TARGET_COL:
+  - SalePrice
+  ID_COL: Id
+  CAT_COLS:
+  - MSZoning
+  - Street
+  - Alley
+  - LotShape
+  - LandContour
+  - Utilities
+  - LotConfig
+  - LandSlope
+  - Neighborhood
+  - Condition1
+  - Condition2
+  - BldgType
+  - HouseStyle
+  - RoofStyle
+  - RoofMatl
+  - Exterior1st
+  - Exterior2nd
+  - MasVnrType
+  - ExterQual
+  - ExterCond
+  - Foundation
+  - BsmtQual
+  - BsmtCond
+  - BsmtExposure
+  - BsmtFinType1
+  - BsmtFinType2
+  - Heating
+  - HeatingQC
+  - CentralAir
+  - Electrical
+  - KitchenQual
+  - Functional
+  - FireplaceQu
+  - GarageType
+  - GarageFinish
+  - GarageQual
+  - GarageCond
+  - PavedDrive
+  - PoolQC
+  - Fence
+  - MiscFeature
+  - SaleType
+  - SaleCondition
+  REAL_COLS:
+  - MSSubClass
+  - OverallQual
+  - OverallCond
+  - LotFrontage
+  - LotArea
+  - MasVnrArea
+  - BsmtFinSF1
+  - BsmtFinSF2
+  - BsmtUnfSF
+  - TotalBsmtSF
+  - 1stFlrSF
+  - 2ndFlrSF
+  - LowQualFinSF
+  - GrLivArea
+  - BsmtFullBath
+  - BsmtHalfBath
+  - FullBath
+  - HalfBath
+  - BedroomAbvGr
+  - KitchenAbvGr
+  - TotRmsAbvGrd
+  - Fireplaces
+  - GarageCars
+  - GarageArea
+  - WoodDeckSF
+  - OpenPorchSF
+  - EnclosedPorch
+  - 3SsnPorch
+  - ScreenPorch
+  - PoolArea
+  - MiscVal
+  DATA_COLS:
+  - YearBuilt
+  - YearRemodAdd
+  - GarageYrBlt
+  - MoSold
+  - YrSold
+  BASEMENT_COLS:
+  - BsmtCond
+  - BsmtExposure
+  - BsmtFinType1
+  - BsmtFinType2
+  MASONRY_COLS:
+  - MasVnrArea
+  GARAGE_COLS:
+  - GarageFinish
+  - GarageQual
+  - GarageCond
+  GARAGE_COL:
+  - GarageYrBlt
+  MAX_NUMBER_NAN_VALUE_COLS:
+  - PoolQC
+  - Fence
+  - MiscFeature
+  - Alley
+  - BsmtQual
+  - GarageType
+  - FireplaceQu
   NUMBER_OF_TEST: 15
 
 interim_paths:
-  data_for_train_pkl: 'data/interim/data_for_train.pkl'
-  val_pkl: 'data/interim/val.pkl'
+  data_for_train_pkl: data/interim/data_for_train.pkl
+  val_pkl: data/interim/val.pkl
 
 processed_paths:
-  target_data_train_pkl: 'data/processed/target_for_data_for_train.pkl'
-  processed_test_pkl: 'data/processed/test.pkl'
-  processed_data_for_train_pkl: 'data/processed/data_for_train.pkl'
+  target_data_train_pkl: data/processed/target_for_data_for_train.pkl
+  processed_test_pkl: data/processed/test.pkl
+  processed_data_for_train_pkl: data/processed/data_for_train.pkl
 
 train:
   #catboost
   test_size: 0.2
-  iterations: 15
-  loss_function: 'RMSE'
+  iterations: 1000
+  loss_function: RMSE
   learning_rate: 0.2
-  ctr_leaf_count_limit: 20
+  ctr_leaf_count_limit: 5
   max_depth: 4
 
   #xgboost
-  booster: 'dart'
-  eta: 0.2
-  tree_method: 'exact'
+  booster: gbtree
+  eta: 0.1
+  tree_method: exact
 
   random_state: 77
 
 train_path:
-  model_catboost_path: 'models/model_catboost.joblib'
-  model_xgboost_path: 'models/model_xgboost.joblib'
-  X_test_path: 'data/processed/X_test_data.pkl'
-  Y_test_path: 'data/processed/Y_test_data.pkl'
+  model_catboost_path: models/model_catboost.joblib
+  model_xgboost_path: models/model_xgboost.joblib
+  X_test_path: data/processed/X_test_data.pkl
+  Y_test_path: data/processed/Y_test_data.pkl
 
 evaluate:
-  score_metric: 'f1'
-  score_path_catboost: 'reports/metrics_catboost.json'
-  score_path_xgboost: 'reports/metrics_xgboost.json'
-  score_path_rocauc_samples_catboost: 'reports/metrics_rocauc_catboost.csv'
-  score_path_rocauc_samples_lgbm: 'reports/metrics_rocauc_lgbm.csv'
+  score_metric: f1
+  score_path_catboost: reports/metrics_catboost.json
+  score_path_xgboost: reports/metrics_xgboost.json
+  score_path_rocauc_samples_catboost: reports/metrics_rocauc_catboost.csv
+  score_path_rocauc_samples_lgbm: reports/metrics_rocauc_lgbm.csv

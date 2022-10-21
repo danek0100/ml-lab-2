@@ -17,15 +17,15 @@ def csv_write(path, data):
 
 # catboost params
 test_sizes = [0.2]
-iterations = [100]
+iterations = [100, 1000]
 loss_functions = ['RMSE']
-learning_rates = [0.05]
-ctr_leaf_count_limits = [1]
-max_depths = [1]
+learning_rates = [0.05, 0.2]
+ctr_leaf_count_limits = [1, 5]
+max_depths = [1, 4]
 
 # xgboost
-boosters = ['dart']
-etas = [0.01]
+boosters = ['dart', 'gbtree']
+etas = [0.01, 0.1]
 tree_methods = ['exact']
 
 random_states = [1, 77]
@@ -101,6 +101,7 @@ for test_size in test_sizes:
                                                 r2_catboost[experiments[-1]] = catboost
                                                 r2_xgboost[experiments[-1]] = xgboost
                                                 os.system('dvc exp branch ' + experiments[-1] + ' ' + experiments[-1])
+                                                break
 
                                             if not find:
                                                 catboost_index = line.find('R2:  ')
@@ -120,6 +121,13 @@ with open('reports/exp_r2_catboost_results.json', 'w') as f:
 with open('reports/exp_r2_xgboost_results.json', 'w') as f:
     json.dump(r2_catboost, f)
 
-csv_write('reports/exp_r2_dynamic_catboost.csv', r2_catboost.values())
-csv_write('reports/exp_r2_dynamic_xgboost.csv', r2_xgboost.values())
+catboost_values = []
+xgboost_values = []
+for value in r2_catboost.values():
+    catboost_values.append(value)
+for value in r2_xgboost.values():
+    xgboost_values.append(value)
+
+csv_write('reports/exp_r2_dynamic_catboost.csv', catboost_values)
+csv_write('reports/exp_r2_dynamic_xgboost.csv', xgboost_values)
 
