@@ -430,3 +430,16 @@ stages:
           eta: 0.1
           tree_method: exact
           random_state: 77
+  dynamic_plot:
+    cmd: python -m src.visualization.visualize
+    deps:
+    - path: src/visualization/visualize.py
+      md5: 381072df60c26258f6f82bcd95f6ef08
+      size: 1538
+    outs:
+    - path: reports/exp_r2_dynamic_catboost.csv
+      md5: fc5650a57cf19d27d1ade7f751c0f833
+      size: 97
+    - path: reports/exp_r2_dynamic_xgboost.csv
+      md5: fc5650a57cf19d27d1ade7f751c0f833
+      size: 97

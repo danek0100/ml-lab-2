@@ -11,24 +11,25 @@ def csv_write(path, data):
         file_writer.writeheader()
         for i in range(len(data)):
             file_writer.writerow(
-#                {"column": columns[i], "result": str(data[i])})
+                #                {"column": columns[i], "result": str(data[i])})
                 {"column": i, "result": str(data[i])})
 
 
+# Many param was deleted after 128 test for generate plots :-)
 # catboost params
 test_sizes = [0.2]
-iterations = [100, 1000]
+iterations = [100]
 loss_functions = ['RMSE']
-learning_rates = [0.05, 0.2]
-ctr_leaf_count_limits = [1, 5]
-max_depths = [1, 4]
+learning_rates = [0.2]
+ctr_leaf_count_limits = [5]
+max_depths = [4]
 
 # xgboost
-boosters = ['dart', 'gbtree']
-etas = [0.01, 0.1]
+boosters = ['dart']
+etas = [0.1]
 tree_methods = ['exact']
 
-random_states = [1, 77]
+random_states = [2, 5, 99, 1312]
 
 command_base = 'dvc exp run -f '
 set_param = '--set-param '
@@ -53,9 +54,6 @@ experiments = []
 with open('../dvc_output.txt', 'w') as f:
     f.write('')
 
-with open('../start_experiments.bat', 'w') as f:
-    f.write('')
-
 os.chdir('..')
 
 for test_size in test_sizes:
@@ -63,7 +61,8 @@ for test_size in test_sizes:
     for iteration in iterations:
         new_command_iteration = new_command_test_size + set_param + 'train.iterations=' + str(iteration) + ' '
         for loss_function in loss_functions:
-            new_command_loss_function = new_command_iteration + set_param + 'train.loss_function=' + str(loss_function) + ' '
+            new_command_loss_function = new_command_iteration + set_param + 'train.loss_function=' + str(
+                loss_function) + ' '
             for learning_rate in learning_rates:
                 new_command_learning_rate = new_command_loss_function + set_param + 'train.learning_rate=' + str(
                     learning_rate) + ' '
@@ -85,7 +84,9 @@ for test_size in test_sizes:
                                     for random_state in random_states:
                                         with open('dvc_output.txt', 'w') as f:
                                             f.write('')
-                                        new_command_random_state = new_command_tree_method + set_param + 'train.random_state=' + str(random_state) + ' '
+                                        new_command_random_state = new_command_tree_method + set_param + 'train' \
+                                                                                                         '.random_state=' + str(
+                                            random_state) + ' '
                                         new_command_random_state += '>> dvc_output.txt\n'
 
                                         os.system(new_command_random_state)
@@ -114,7 +115,6 @@ for test_size in test_sizes:
                                                     xgboost = line[5:-1]
                                                     find = False
 
-
 with open('reports/exp_r2_catboost_results.json', 'w') as f:
     json.dump(r2_catboost, f)
 
@@ -130,4 +130,3 @@ for value in r2_xgboost.values():
 
 csv_write('reports/exp_r2_dynamic_catboost.csv', catboost_values)
 csv_write('reports/exp_r2_dynamic_xgboost.csv', xgboost_values)
-
