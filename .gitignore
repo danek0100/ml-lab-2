@@ -91,3 +91,9 @@ target/
 
 # Catboost
 catboost_info
+
+dvc_output.txt
+reports/exp_r2_catboost_results.json
+reports/exp_r2_xgboost_results.json
+reports/exp_r2_dynamic_catboost.csv
+reports/exp_r2_dynamic_xgboost.csv
