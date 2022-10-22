@@ -88,10 +88,11 @@ stages:
     cmd: python -m src.visualization.visualize
     deps:
       - src/visualization/visualize.py
+      - src/exp_generate.py
     plots:
       - reports/exp_r2_dynamic_xgboost.csv:
           template: scatter
-          cache: true
+          cache: false
       - reports/exp_r2_dynamic_catboost.csv:
           template: scatter
           cache: false

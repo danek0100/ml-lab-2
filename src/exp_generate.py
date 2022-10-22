@@ -119,7 +119,7 @@ with open('reports/exp_r2_catboost_results.json', 'w') as f:
     json.dump(r2_catboost, f)
 
 with open('reports/exp_r2_xgboost_results.json', 'w') as f:
-    json.dump(r2_catboost, f)
+    json.dump(r2_xgboost, f)
 
 catboost_values = []
 xgboost_values = []

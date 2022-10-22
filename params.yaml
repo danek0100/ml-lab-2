@@ -123,18 +123,18 @@ processed_paths:
 train:
   #catboost
   test_size: 0.2
-  iterations: 1000
+  iterations: 100
   loss_function: RMSE
   learning_rate: 0.2
   ctr_leaf_count_limit: 5
   max_depth: 4
 
   #xgboost
-  booster: gbtree
+  booster: dart
   eta: 0.1
   tree_method: exact
 
-  random_state: 77
+  random_state: 1312
 
 train_path:
   model_catboost_path: models/model_catboost.joblib
